@@ -1,6 +1,5 @@
 package befaster.solutions.CHK;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class CheckoutSolution {
@@ -51,7 +50,7 @@ public class CheckoutSolution {
                         numberOfValidProducts = 0;
                     }
                     numberOfValidProducts++;
-                    HashMap<Item, Integer> map = new HashMap<>();
+                    Map<Item, Integer> map = validOffers.getValidOffers();
                     map.put(item, numberOfValidProducts);
                     validOffers.setValidOffers(map);
                 }
@@ -79,4 +78,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
