@@ -6,10 +6,12 @@ import java.util.Map;
 public class CheckoutSolution {
 
     private ValidOffers validOffers;
+    private DiscountOffers discountOffers;
 
     public Integer checkout(String skus) {
         Integer sum = 0;
         validOffers = new ValidOffers();
+        discountOffers = new DiscountOffers();
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
@@ -39,15 +41,17 @@ public class CheckoutSolution {
     }
 
     private void countOffersEligibleProducts(char sku) {
+
         for (Item item : Item.values()) {
             if (sku == item.getCharacter()){
-                Integer validOffer = validOffers.getValidOffers().get(item);
-                if (validOffer == null) {
-                    validOffer = 0;
+                Map<Integer, Integer> validOffer = discountOffers.getOffers().get(item);
+                if(validOffer != null) {
+                    Integer numberOfValidProducts = validOffers.getValidOffers().get(item);
+                    numberOfValidProducts++;
+                    HashMap<Item, Integer> map = new HashMap<>();
+                    map.put(item, numberOfValidProducts);
+                    validOffers.setValidOffers(map);
                 }
-                HashMap<Item, Integer> map = new HashMap<>();
-                map.put(item, validOffer);
-                validOffers.setValidOffers(map);
             }
         }
     }
@@ -72,5 +76,6 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
 
