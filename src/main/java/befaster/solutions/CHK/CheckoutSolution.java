@@ -50,12 +50,10 @@ public class CheckoutSolution {
                     if (numberOfValidProducts == null) {
                         numberOfValidProducts = 0;
                     }
-                    if (validOffers.getValidOffers() != null) {
-                        numberOfValidProducts++;
-                        HashMap<Item, Integer> map = new HashMap<>();
-                        map.put(item, numberOfValidProducts);
-                        validOffers.setValidOffers(map);
-                    }
+                    numberOfValidProducts++;
+                    HashMap<Item, Integer> map = new HashMap<>();
+                    map.put(item, numberOfValidProducts);
+                    validOffers.setValidOffers(map);
                 }
             }
         }
@@ -81,3 +79,4 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
