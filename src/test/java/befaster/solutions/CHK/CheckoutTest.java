@@ -17,7 +17,8 @@ public class CheckoutTest {
 
     @Test
     public void returnNegativeForIncorrectInput() {
-        assertThat(checkoutSolution.checkout("ABCDE"), equalTo(-1));
+        assertThat(checkoutSolution.checkout("ABCDE"), equalTo(1));
     }
 }
+
 
