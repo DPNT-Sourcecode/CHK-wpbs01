@@ -28,4 +28,3 @@ public class DiscountOffers {
         return offers;
     }
 }
-
