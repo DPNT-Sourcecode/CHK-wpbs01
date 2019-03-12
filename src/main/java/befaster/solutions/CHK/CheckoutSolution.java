@@ -24,8 +24,8 @@ public class CheckoutSolution {
             sum = sum + validFullOfferA*130 - validOfferA*50;
         }
         if (validOfferB >= 2) {
-            int validFullOfferB = validOfferB/3;
-            sum = sum + validFullOfferB*130 - validOfferB*50;
+            int validFullOfferB = validOfferB/2;
+            sum = sum + validFullOfferB*45 - validOfferB*30;
         }
         return sum;
     }
@@ -56,4 +56,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
