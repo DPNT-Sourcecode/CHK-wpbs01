@@ -17,8 +17,19 @@ public class CheckoutTest {
 
     @Test
     public void returnNegativeForIncorrectInput() {
-        assertThat(checkoutSolution.checkout("ABCDE"), equalTo(1));
+        assertThat(checkoutSolution.checkout("ABCDE"), equalTo(-1));
+    }
+
+    @Test
+    public void returnCorrectSumForSingleSkus() {
+        assertThat(checkoutSolution.checkout("ABC"), equalTo(100));
+    }
+
+    @Test
+    public void returnCorrectSumForMultipleSkus() {
+        assertThat(checkoutSolution.checkout("AABCC"), equalTo(170));
     }
 }
+
 
 
