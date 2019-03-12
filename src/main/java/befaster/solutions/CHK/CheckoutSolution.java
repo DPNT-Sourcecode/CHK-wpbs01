@@ -59,7 +59,7 @@ public class CheckoutSolution {
     }
 
     private boolean skuNotValid(char sku) {
-        return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D';
+        return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 
     private Integer mapSkuToCost(char sku) {
@@ -78,3 +78,4 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
