@@ -24,12 +24,15 @@ public class CheckoutSolution {
         Map<Item, Map<Integer, Integer>> discountOffers = (new DiscountOffers()).getOffers();
         for (Item item : discountOffers.keySet()) {
             Map<Integer, Integer> discounts = discountOffers.get(item);
-            for(Integer amountOfOffer : discounts.keySet()){
-                if(validOffers.getValidOffers().get(item) > amountOfOffer) {
-                    int validFullOfferItem = validOffers.getValidOffers().get(item)/amountOfOffer;
-                    sum = sum + validFullOfferItem*item.getPrice() - validFullOfferItem*amountOfOffer*discountOffers.get(item).get(amountOfOffer);
+            if(discounts != null){
+                for(Integer amountOfOffer : discounts.keySet()){
+                    if(validOffers.getValidOffers().get(item) > amountOfOffer) {
+                        int validFullOfferItem = validOffers.getValidOffers().get(item)/amountOfOffer;
+                        sum = sum + validFullOfferItem*item.getPrice() - validFullOfferItem*amountOfOffer*discountOffers.get(item).get(amountOfOffer);
+                    }
                 }
             }
+
         }
         return sum;
     }
@@ -66,4 +69,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 

@@ -7,7 +7,6 @@ public class ValidOffers {
 
     private Map<Item, Integer> validOffers = new HashMap<>();
 
-
     public Map<Item, Integer> getValidOffers() {
         return validOffers;
     }
@@ -16,4 +15,5 @@ public class ValidOffers {
         this.validOffers = validOffers;
     }
 }
+
 
