@@ -42,11 +42,12 @@ public class CheckoutSolution {
         for (Item item : Item.values()) {
             if (sku == item.getCharacter()){
                 Integer validOffer = validOffers.getValidOffers().get(item);
-                if (validOffer != null) {
-                    HashMap<Item, Integer> map = new HashMap<>();
-                    map.put(item, validOffer);
-                    validOffers.setValidOffers(map);
+                if (validOffer == null) {
+                    validOffer = 0;
                 }
+                HashMap<Item, Integer> map = new HashMap<>();
+                map.put(item, validOffer);
+                validOffers.setValidOffers(map);
             }
         }
     }
@@ -71,4 +72,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
