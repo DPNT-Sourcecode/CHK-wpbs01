@@ -29,4 +29,10 @@ public class CheckoutTest {
     public void returnCorrectSumForMultipleSkus() {
         assertThat(checkoutSolution.checkout("AABCC"), equalTo(170));
     }
+
+    @Test
+    public void returnCorrectSumForMultipleSkusWithOffer() {
+        assertThat(checkoutSolution.checkout("AAABBCC"), equalTo(215));
+    }
 }
+

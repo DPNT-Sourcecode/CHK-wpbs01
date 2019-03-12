@@ -1,15 +1,41 @@
 package befaster.solutions.CHK;
 
 public class CheckoutSolution {
+
+    private Integer validOfferA = 0;
+    private Integer validOfferB = 0;
+
     public Integer checkout(String skus) {
         Integer sum = 0;
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
             }
+            countOffersEligibleProducts(sku);
             sum += mapSkuToCost(sku);
         }
+        sum = applyOffersDiscount(sum);
         return sum;
+    }
+
+    private Integer applyOffersDiscount(Integer sum) {
+        if (validOfferA >= 3) {
+            int validFullOfferA = validOfferA/3;
+            sum = sum + validFullOfferA*130 - validOfferA*50;
+        }
+        if (validOfferB >= 2) {
+            int validFullOfferB = validOfferB/3;
+            sum = sum + validFullOfferB*130 - validOfferB*50;
+        }
+        return sum;
+    }
+
+    private void countOffersEligibleProducts(char sku) {
+        if (sku == 'A') {
+            validOfferA++;
+        } else if (sku == 'B') {
+            validOfferB++;
+        }
     }
 
     private boolean skuNotValid(char sku) {
@@ -30,3 +56,4 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
