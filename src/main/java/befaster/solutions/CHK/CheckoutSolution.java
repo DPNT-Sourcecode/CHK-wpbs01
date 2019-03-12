@@ -26,7 +26,7 @@ public class CheckoutSolution {
             Map<Integer, Integer> discounts = discountOffers.get(item);
             if(discounts != null){
                 for(Integer amountOfOffer : discounts.keySet()){
-                    if(validOffers.getValidOffers().get(item) > amountOfOffer) {
+                    if(validOffers.getValidOffers() != null && validOffers.getValidOffers().get(item) > amountOfOffer) {
                         int validFullOfferItem = validOffers.getValidOffers().get(item)/amountOfOffer;
                         sum = sum + validFullOfferItem*item.getPrice() - validFullOfferItem*amountOfOffer*discountOffers.get(item).get(amountOfOffer);
                     }
@@ -69,5 +69,6 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
 
