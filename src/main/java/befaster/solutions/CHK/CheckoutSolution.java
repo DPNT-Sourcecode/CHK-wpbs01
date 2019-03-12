@@ -1,14 +1,14 @@
 package befaster.solutions.CHK;
 
+import java.util.Map;
+
 public class CheckoutSolution {
 
-    private Integer validOfferA = 0;
-    private Integer validOfferB = 0;
+    private ValidOffers validOffers;
 
     public Integer checkout(String skus) {
         Integer sum = 0;
-        validOfferA = 0;
-        validOfferB = 0;
+        validOffers = new ValidOffers();
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
@@ -21,22 +21,28 @@ public class CheckoutSolution {
     }
 
     private Integer applyOffersDiscount(Integer sum) {
-        if (validOfferA >= 3) {
-            int validFullOfferA = validOfferA/3;
-            sum = sum + validFullOfferA*130 - validFullOfferA*3*50;
-        }
-        if (validOfferB >= 2) {
-            int validFullOfferB = validOfferB/2;
-            sum = sum + validFullOfferB*45 - validFullOfferB*2*30;
+        Map<Item, Map<Integer, Integer>> discountOffers = (new DiscountOffers()).getOffers();
+        for (Item item : discountOffers.keySet()) {
+            Map<Integer, Integer> discounts = discountOffers.get(item);
+            for(Integer amountOfOffer : discounts.keySet()){
+                if(validOffers.getValidOffers().get(item) > amountOfOffer) {
+                    int validFullOfferItem = validOffers.getValidOffers().get(item)/amountOfOffer;
+                    sum = sum + validFullOfferItem*item.getPrice() - validFullOfferItem*amountOfOffer*discountOffers.get(item).get(amountOfOffer);
+                }
+            }
         }
         return sum;
     }
 
     private void countOffersEligibleProducts(char sku) {
-        if (sku == 'A') {
-            validOfferA++;
-        } else if (sku == 'B') {
-            validOfferB++;
+        for (Item item : Item.values()) {
+            if (sku == item.getCharacter()){
+                Integer validOffer = validOffers.getValidOffers().get(item);
+                if (validOffer != null) {
+                    validOffer++;
+                    validOffers.getValidOffers().put(item, validOffer);
+                }
+            }
         }
     }
 
@@ -54,7 +60,10 @@ public class CheckoutSolution {
             cost = 20;
         } else if (sku == 'D') {
             cost = 15;
+        } else if (sku == 'E') {
+            cost = 40;
         }
         return cost;
     }
 }
+

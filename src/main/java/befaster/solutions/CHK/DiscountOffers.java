@@ -8,8 +8,7 @@ public class DiscountOffers {
 
     static {
         offers.put(Item.A, offerA());
-        offers.put(Item.B, offerA());
-        offers.put(Item.E, offerA());
+        offers.put(Item.B, offerB());
     }
 
     private static Map<Integer, Integer> offerA() {
@@ -30,4 +29,9 @@ public class DiscountOffers {
         offer.put(2, 145);
         return offer;
     }
+
+    public static Map<Item, Map<Integer, Integer>> getOffers() {
+        return offers;
+    }
 }
+
