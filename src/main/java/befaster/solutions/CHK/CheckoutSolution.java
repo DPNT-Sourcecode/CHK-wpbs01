@@ -47,10 +47,15 @@ public class CheckoutSolution {
                 Map<Integer, Integer> validOffer = discountOffers.getOffers().get(item);
                 if(validOffer != null) {
                     Integer numberOfValidProducts = validOffers.getValidOffers().get(item);
-                    numberOfValidProducts++;
-                    HashMap<Item, Integer> map = new HashMap<>();
-                    map.put(item, numberOfValidProducts);
-                    validOffers.setValidOffers(map);
+                    if (numberOfValidProducts == null) {
+                        numberOfValidProducts = 0;
+                    }
+                    if (validOffers.getValidOffers() != null) {
+                        numberOfValidProducts++;
+                        HashMap<Item, Integer> map = new HashMap<>();
+                        map.put(item, numberOfValidProducts);
+                        validOffers.setValidOffers(map);
+                    }
                 }
             }
         }
@@ -76,6 +81,7 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
 
 
