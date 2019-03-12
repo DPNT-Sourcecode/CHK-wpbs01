@@ -1,5 +1,6 @@
 package befaster.solutions.CHK;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CheckoutSolution {
@@ -42,8 +43,9 @@ public class CheckoutSolution {
             if (sku == item.getCharacter()){
                 Integer validOffer = validOffers.getValidOffers().get(item);
                 if (validOffer != null) {
-                    validOffer++;
-                    validOffers.getValidOffers().put(item, validOffer);
+                    HashMap<Item, Integer> map = new HashMap<Item, Integer>();
+                    map.put(item, validOffer);
+                    validOffers.setValidOffers(map);
                 }
             }
         }
@@ -69,7 +71,3 @@ public class CheckoutSolution {
         return cost;
     }
 }
-
-
-
-

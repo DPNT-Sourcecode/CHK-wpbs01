@@ -15,5 +15,3 @@ public class ValidOffers {
         this.validOffers = validOffers;
     }
 }
-
-
