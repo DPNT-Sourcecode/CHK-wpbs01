@@ -24,13 +24,8 @@ public class DiscountOffers {
         return offer;
     }
 
-    private static Map<Integer, Integer> offerE() {
-        Map<Integer, Integer> offer = new HashMap<>();
-        offer.put(2, 145);
-        return offer;
-    }
-
     public static Map<Item, Map<Integer, Integer>> getOffers() {
         return offers;
     }
 }
+
