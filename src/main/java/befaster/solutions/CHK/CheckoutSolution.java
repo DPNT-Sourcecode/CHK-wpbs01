@@ -7,6 +7,8 @@ public class CheckoutSolution {
 
     public Integer checkout(String skus) {
         Integer sum = 0;
+        validOfferA = 0;
+        validOfferB = 0;
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
@@ -56,5 +58,6 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
 
