@@ -1,5 +1,7 @@
 package befaster.solutions.CHK;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CheckoutSolution {
@@ -9,53 +11,61 @@ public class CheckoutSolution {
 
     public Integer checkout(String skus) {
         Integer sum = 0;
-        validOffers = new ValidOffers();
-        discountOffers = new DiscountOffers();
+        Map<Item, Integer> frequency = populateFrequency(skus);
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
             }
-            countOffersEligibleProducts(sku);
-            sum += mapSkuToCost(sku);
         }
-        sum = applyOffersDiscount(sum);
-        return sum;
+        Map<Item, List<Discount>> offers = OfferGenerator.generate();
+
+        return calculateDiscounts(frequency, skus, offers) + calculateRemainingProducts(frequency);
     }
 
-    private Integer applyOffersDiscount(Integer sum) {
-        Map<Item, Map<Integer, Integer>> discountOffers = (new DiscountOffers()).getOffers();
-        for (Item item : discountOffers.keySet()) {
-            Map<Integer, Integer> discounts = discountOffers.get(item);
-            if(discounts != null){
-                for(Integer amountOfOffer : discounts.keySet()){
-                    if((validOffers.getValidOffers() != null) && (validOffers.getValidOffers().get(item) != null &&  validOffers.getValidOffers().get(item) > amountOfOffer)) {
-                        int validFullOfferItem = validOffers.getValidOffers().get(item)/amountOfOffer;
-                        sum = sum + validFullOfferItem*item.getPrice() - validFullOfferItem*amountOfOffer*discountOffers.get(item).get(amountOfOffer);
-                    }
-                }
-            }
-
-        }
-        return sum;
-    }
-
-    private void countOffersEligibleProducts(char sku) {
-
+    private Integer calculateRemainingProducts(Map<Item, Integer> frequency) {
+        Integer sum = 0;
         for (Item item : Item.values()) {
-            if (sku == item.getCharacter()){
-                Map<Integer, Integer> validOffer = discountOffers.getOffers().get(item);
-                if(validOffer != null) {
-                    Integer numberOfValidProducts = validOffers.getValidOffers().get(item);
-                    if (numberOfValidProducts == null) {
-                        numberOfValidProducts = 0;
-                    }
-                    numberOfValidProducts++;
-                    Map<Item, Integer> map = validOffers.getValidOffers();
-                    map.put(item, numberOfValidProducts);
-                    validOffers.setValidOffers(map);
+            sum = sum + (item.getPrice()*frequency.get(item));
+        }
+        return sum;
+    }
+
+    private Integer calculateDiscounts(Map<Item, Integer> frequency, String skus, Map<Item, List<Discount>> offers) {
+        Integer totalCost = 0;
+        for (char product : skus.toCharArray()) {
+            Item item = mapCharToItem(product);
+            Integer quantity = frequency.getOrDefault(item, 0);
+            List<Discount> discounts = offers.get(item);
+            for (int i=0; discounts != null && i < discounts.size(); i++) {
+                Discount discount = discounts.get(i);
+                if (quantity >= discount.getQuantity() && discount.getItemForFree() == null) {
+                    totalCost = discount.getPrice();
+                    frequency.put(item, frequency.get(item) - discount.getQuantity());
+                } else if (discount.getPrice() == null) {
+                    frequency.put(discount.getItemForFree(), frequency.get(mapCharToItem(product)) - 1);
                 }
             }
         }
+        return totalCost;
+    }
+
+    private Map<Item, Integer> populateFrequency(String skus) {
+        Map<Item, Integer> frequency = new HashMap<>();
+        for(char product : skus.toCharArray()) {
+            Item item = mapCharToItem(product);
+            Integer productFrequency = frequency.getOrDefault(item, 0);
+            frequency.put(item, ++productFrequency);
+        }
+        return frequency;
+    }
+
+    private Item mapCharToItem(char product) {
+        for (Item item : Item.values()) {
+            if (item.getCharacter() == product) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private boolean skuNotValid(char sku) {
@@ -78,3 +88,4 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
