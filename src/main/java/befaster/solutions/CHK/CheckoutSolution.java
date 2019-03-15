@@ -40,7 +40,7 @@ public class CheckoutSolution {
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
                 } else if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
                     discountApplied = true;
-                    frequency.put(discount.getItemForFree(), frequency.get(mapCharToItem(product)) - 1);
+                    frequency.put(discount.getItemForFree(), frequency.get(discount.getItemForFree()) - 1);
                 }
             }
         }
@@ -70,6 +70,7 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
 
 
 
