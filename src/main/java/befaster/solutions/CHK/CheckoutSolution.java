@@ -31,9 +31,11 @@ public class CheckoutSolution {
             Item item = mapCharToItem(product);
             Integer quantity = frequency.getOrDefault(item, 0);
             List<Discount> discounts = offers.get(item);
+            boolean discountApplied = false;
             for (int i=0; discounts != null && i < discounts.size(); i++) {
                 Discount discount = discounts.get(i);
-                if (quantity >= discount.getQuantity() && discount.getItemForFree() == null) {
+                if (quantity >= discount.getQuantity() && discount.getItemForFree() == null && !discountApplied) {
+                    discountApplied = true;
                     totalCost += discount.getPrice();
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
                 } else if (discount.getPrice() == null) {
@@ -83,3 +85,4 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
