@@ -11,4 +11,3 @@ public class OfferGenerator {
         return Collections.unmodifiableMap(offers);
     }
 }
-
