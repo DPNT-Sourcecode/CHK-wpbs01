@@ -36,8 +36,9 @@ public class CheckoutSolution {
             Item item = mapCharToItem(product);
             Integer quantity = frequency.getOrDefault(item, 0);
             boolean discountApplied = false;
-            ArrayList<Discount> getOneFreeDiscounts = offers.get(item).stream().filter(d -> d.getItemForFree() != null).collect(Collectors.toCollection(ArrayList::new));
-            ArrayList<Discount> multipackDiscounts = offers.get(item).stream().filter(d -> d.getPrice() != null).collect(Collectors.toCollection(ArrayList::new));
+            List<Discount> discounts = offers.getOrDefault(item, new ArrayList<>());
+            ArrayList<Discount> getOneFreeDiscounts = discounts.stream().filter(d -> d.getItemForFree() != null).collect(Collectors.toCollection(ArrayList::new));
+            ArrayList<Discount> multipackDiscounts = discounts.stream().filter(d -> d.getPrice() != null).collect(Collectors.toCollection(ArrayList::new));
             for (Discount discount : getOneFreeDiscounts) {
                 if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
                     discountApplied = true;
@@ -78,4 +79,5 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
 
