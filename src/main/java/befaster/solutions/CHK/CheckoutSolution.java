@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CheckoutSolution {
 
@@ -32,13 +31,23 @@ public class CheckoutSolution {
 
     private Integer calculateDiscounts(Map<Item, Integer> frequency, String skus, Map<Item, List<Discount>> offers) {
         Integer totalCost = 0;
+        ArrayList<Discount> getOneFreeDiscounts = new ArrayList<>();
+        ArrayList<Discount> multipackDiscounts = new ArrayList<>();
+        for (char product : skus.toCharArray()) {
+            Item item = mapCharToItem(product);
+            List<Discount> discounts = offers.getOrDefault(item, new ArrayList<>());
+            for (Discount discount : discounts) {
+                if (discount.getItemForFree() != null) {
+                    getOneFreeDiscounts.add(discount);
+                } else {
+                    multipackDiscounts.add(discount);
+                }
+            }
+        }
         for (char product : skus.toCharArray()) {
             Item item = mapCharToItem(product);
             Integer quantity = frequency.getOrDefault(item, 0);
             boolean discountApplied = false;
-            List<Discount> discounts = offers.getOrDefault(item, new ArrayList<>());
-            ArrayList<Discount> getOneFreeDiscounts = discounts.stream().filter(d -> d.getItemForFree() != null).collect(Collectors.toCollection(ArrayList::new));
-            ArrayList<Discount> multipackDiscounts = discounts.stream().filter(d -> d.getPrice() != null).collect(Collectors.toCollection(ArrayList::new));
             for (Discount discount : getOneFreeDiscounts) {
                 if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
                     discountApplied = true;
@@ -79,5 +88,6 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
 
 
