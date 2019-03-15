@@ -20,7 +20,10 @@ public class CheckoutSolution {
     private Integer calculateRemainingProducts(Map<Item, Integer> frequency) {
         Integer sum = 0;
         for (Item item : Item.values()) {
-            sum = sum + (item.getPrice()*frequency.getOrDefault(item, 0));
+            Integer itemFrequency = frequency.getOrDefault(item, 0);
+            if (itemFrequency > 0) {
+                sum = sum + (item.getPrice()*itemFrequency);
+            }
         }
         return sum;
     }
@@ -40,7 +43,7 @@ public class CheckoutSolution {
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
                 } else if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
                     discountApplied = true;
-                    frequency.put(discount.getItemForFree(), frequency.get(discount.getItemForFree()) - 1);
+                    frequency.put(discount.getItemForFree(), frequency.getOrDefault(discount.getItemForFree(), 0) - 1);
                 }
             }
         }
@@ -70,6 +73,7 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
 
 
 

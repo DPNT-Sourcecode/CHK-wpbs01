@@ -38,11 +38,11 @@ public class CheckoutTest {
         assertThat(checkoutSolution.checkout("AAAA"), equalTo(180));
         assertThat(checkoutSolution.checkout("BBB"), equalTo(75));
         assertThat(checkoutSolution.checkout("ABCDE"), equalTo(155));
-
         assertThat(checkoutSolution.checkout("EEB"), equalTo(80));
     }
 
 }
+
 
 
 
