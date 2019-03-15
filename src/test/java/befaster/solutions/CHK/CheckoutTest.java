@@ -34,7 +34,7 @@ public class CheckoutTest {
     public void returnCorrectSumForMultipleSkusWithOffer() {
         assertThat(checkoutSolution.checkout("BEBEEE"), equalTo(160));
         assertThat(checkoutSolution.checkout("ABCDEABCDE"), equalTo(280));
-        assertThat(checkoutSolution.checkout("BEBEEE"), equalTo(160));
+        assertThat(checkoutSolution.checkout("CCADDEEBBA"), equalTo(280));
         assertThat(checkoutSolution.checkout("EE"), equalTo(80));
         assertThat(checkoutSolution.checkout("AAAAA"), equalTo(200));
         assertThat(checkoutSolution.checkout("AAABBCC"), equalTo(215));
@@ -45,3 +45,4 @@ public class CheckoutTest {
     }
 
 }
+

@@ -1,8 +1,10 @@
 package befaster.solutions.CHK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CheckoutSolution {
 
@@ -33,17 +35,20 @@ public class CheckoutSolution {
         for (char product : skus.toCharArray()) {
             Item item = mapCharToItem(product);
             Integer quantity = frequency.getOrDefault(item, 0);
-            List<Discount> discounts = offers.get(item);
             boolean discountApplied = false;
-            for (int i=0; discounts != null && i < discounts.size(); i++) {
-                Discount discount = discounts.get(i);
+            ArrayList<Discount> getOneFreeDiscounts = offers.get(item).stream().filter(d -> d.getItemForFree() != null).collect(Collectors.toCollection(ArrayList::new));
+            ArrayList<Discount> multipackDiscounts = offers.get(item).stream().filter(d -> d.getPrice() != null).collect(Collectors.toCollection(ArrayList::new));
+            for (Discount discount : getOneFreeDiscounts) {
+                if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
+                    discountApplied = true;
+                    frequency.put(discount.getItemForFree(), frequency.getOrDefault(discount.getItemForFree(), 0) - 1);
+                }
+            }
+            for (Discount discount : multipackDiscounts) {
                 if (quantity >= discount.getQuantity() && discount.getItemForFree() == null && !discountApplied) {
                     discountApplied = true;
                     totalCost += discount.getPrice();
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
-                } else if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
-                    discountApplied = true;
-                    frequency.put(discount.getItemForFree(), frequency.getOrDefault(discount.getItemForFree(), 0) - 1);
                 }
             }
         }
@@ -73,3 +78,4 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
