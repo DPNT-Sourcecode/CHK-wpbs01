@@ -38,8 +38,10 @@ public class CheckoutTest {
         assertThat(checkoutSolution.checkout("BBB"), equalTo(75));
         assertThat(checkoutSolution.checkout("ABCDE"), equalTo(155));
         assertThat(checkoutSolution.checkout("EE"), equalTo(80));
+        assertThat(checkoutSolution.checkout("EEB"), equalTo(80));
     }
 
 }
+
 
 

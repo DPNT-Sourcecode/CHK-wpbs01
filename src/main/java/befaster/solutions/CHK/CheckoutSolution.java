@@ -38,7 +38,8 @@ public class CheckoutSolution {
                     discountApplied = true;
                     totalCost += discount.getPrice();
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
-                } else if (discount.getPrice() == null) {
+                } else if (discount.getPrice() == null && !discountApplied) {
+                    discountApplied = true;
                     frequency.put(discount.getItemForFree(), frequency.get(mapCharToItem(product)) - 1);
                 }
             }
@@ -85,4 +86,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
