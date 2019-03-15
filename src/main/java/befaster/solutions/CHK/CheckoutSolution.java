@@ -33,8 +33,7 @@ public class CheckoutSolution {
         Integer totalCost = 0;
         ArrayList<Discount> getOneFreeDiscounts = new ArrayList<>();
         ArrayList<Discount> multipackDiscounts = new ArrayList<>();
-        for (char product : skus.toCharArray()) {
-            Item item = mapCharToItem(product);
+        for (Item item : Item.values()) {
             List<Discount> discounts = offers.getOrDefault(item, new ArrayList<>());
             for (Discount discount : discounts) {
                 if (discount.getItemForFree() != null) {
@@ -88,6 +87,7 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
 
 
 
