@@ -38,7 +38,7 @@ public class CheckoutSolution {
                     discountApplied = true;
                     totalCost += discount.getPrice();
                     frequency.put(item, frequency.get(item) - discount.getQuantity());
-                } else if (discount.getPrice() == null && !discountApplied) {
+                } else if (quantity >= discount.getQuantity() && discount.getPrice() == null && !discountApplied) {
                     discountApplied = true;
                     frequency.put(discount.getItemForFree(), frequency.get(mapCharToItem(product)) - 1);
                 }
@@ -69,22 +69,7 @@ public class CheckoutSolution {
     private boolean skuNotValid(char sku) {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
-
-    private Integer mapSkuToCost(char sku) {
-        Integer cost = 0;
-        if (sku == 'A') {
-            cost = 50;
-        } else if (sku == 'B') {
-            cost = 30;
-        } else if (sku == 'C') {
-            cost = 20;
-        } else if (sku == 'D') {
-            cost = 15;
-        } else if (sku == 'E') {
-            cost = 40;
-        }
-        return cost;
-    }
 }
+
 
 
