@@ -33,6 +33,7 @@ public class CheckoutSolution {
         Integer totalCost = 0;
         ArrayList<Discount> getOneFreeDiscounts = new ArrayList<>();
         ArrayList<Discount> multipackDiscounts = new ArrayList<>();
+
         for (char product : skus.toCharArray()) {
             Item item = mapCharToItem(product);
             List<Discount> discounts = offers.getOrDefault(item, new ArrayList<>());
@@ -43,9 +44,6 @@ public class CheckoutSolution {
                     multipackDiscounts.add(discount);
                 }
             }
-        }
-        for (char product : skus.toCharArray()) {
-            Item item = mapCharToItem(product);
             Integer quantity = frequency.getOrDefault(item, 0);
             boolean discountApplied = false;
             for (Discount discount : getOneFreeDiscounts) {
@@ -88,3 +86,4 @@ public class CheckoutSolution {
         return sku != 'A' && sku != 'B' && sku != 'C' && sku != 'D' && sku != 'E';
     }
 }
+
