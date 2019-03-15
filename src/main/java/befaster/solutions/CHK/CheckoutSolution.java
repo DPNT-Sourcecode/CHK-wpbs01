@@ -6,26 +6,21 @@ import java.util.Map;
 
 public class CheckoutSolution {
 
-    private ValidOffers validOffers;
-    private DiscountOffers discountOffers;
-
     public Integer checkout(String skus) {
-        Integer sum = 0;
-        Map<Item, Integer> frequency = populateFrequency(skus);
         for (char sku : skus.toCharArray()) {
             if (skuNotValid(sku)) {
                 return -1;
             }
         }
         Map<Item, List<Discount>> offers = OfferGenerator.generate();
-
+        Map<Item, Integer> frequency = populateFrequency(skus);
         return calculateDiscounts(frequency, skus, offers) + calculateRemainingProducts(frequency);
     }
 
     private Integer calculateRemainingProducts(Map<Item, Integer> frequency) {
         Integer sum = 0;
         for (Item item : Item.values()) {
-            sum = sum + (item.getPrice()*frequency.get(item));
+            sum = sum + (item.getPrice()*frequency.getOrDefault(item, 0));
         }
         return sum;
     }
@@ -88,4 +83,5 @@ public class CheckoutSolution {
         return cost;
     }
 }
+
 
